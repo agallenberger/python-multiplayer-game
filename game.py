@@ -63,7 +63,7 @@ class GuiGame:
         self.server         = None
         self.stop_thread    = False
         self.online_thread  = threading.Thread(target=self.online_function, daemon=True)
-        self.connect_thread = threading.Thread(target=self.server_connect, daemon=True)
+
 
     def run(self):
         '''
@@ -86,7 +86,7 @@ class GuiGame:
         :param event:
         :return: None
         '''
-        ## Start TCP thread
+        ## Start TCP connection
         if self.mp_connected == False:
             self.server_connect()
 
@@ -305,7 +305,6 @@ class GuiGame:
             self.restart_online_service()
 
         if self.mp_connected == False:
-            print('reconnect')
             self.server_connect()
             self.online_function()
 
@@ -315,7 +314,6 @@ class GuiGame:
         self.server.close()
         self.mp_connected = False
         self.mp_players = []
-        self.connect_thread.start()
         self.server_connect()
         self.online_function()
 
